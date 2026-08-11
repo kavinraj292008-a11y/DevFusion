@@ -1,11 +1,15 @@
-# Environment variables
+# Environment
 .env
 
-# Virtual environment
+# Dependencies
+node_modules/
+
+# Uploads
+uploads/
+
+# Python
 venv/
 .venv/
-
-# Python cache
 __pycache__/
 *.pyc
 
