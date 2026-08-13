@@ -4,6 +4,7 @@ import {
   applyForJob,
   getMyApplications,
   getJobApplications,
+  getAllApplications,
   updateApplicationStatus,
   analyzeApplication,
 } from '../controllers/application.controller.js';
@@ -31,6 +32,12 @@ router.get(
 );
 
 // Recruiter / Hiring Manager / Admin
+router.get(
+  '/',
+  authorize('recruiter', 'hiring_manager', 'admin'),
+  getAllApplications
+);
+
 router.get(
   '/jobs/:jobId',
   authorize('recruiter', 'hiring_manager', 'admin'),

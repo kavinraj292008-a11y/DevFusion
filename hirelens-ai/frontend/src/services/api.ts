@@ -1,18 +1,28 @@
-interface ViteEnv {
-  VITE_API_BASE_URL?: string;
-  VITE_USE_MOCK?: string;
-}
+import axios from 'axios';
 
-export const API_BASE = (import.meta as unknown as { env: ViteEnv }).env.VITE_API_BASE_URL || '';
-export const USE_MOCK = (import.meta as unknown as { env: ViteEnv }).env.VITE_USE_MOCK === 'true';
+const api = axios.create({
+  baseURL: (import.meta as any).env.VITE_API_URL || 'http://localhost:4000/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+// Automatically attach JWT
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
 
-// Export apiRequest helper function
-export const apiRequest = async <T>(endpoint: string, options?: RequestInit): Promise<T> => {
-  const response = await fetch(`${API_BASE}${endpoint}`, options);
-  if (!response.ok) {
-    throw new Error(`API Error: ${response.statusText}`);
-  }
-  return response.json();
-};
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Temporary delay function for existing mock services
+export const delay = (ms: number): Promise<void> =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
+export default api;

@@ -18,27 +18,17 @@ export const applyForJob = async (req, res, next) => {
     const job = await Job.findById(jobId);
 
     if (!job || job.status !== 'published') {
-      return errorResponse(
-        res,
-        404,
-        'Job not found or not open'
-      );
+      return errorResponse(res, 404, 'Job not found or not open');
     }
 
     if (
       job.applicationDeadline &&
       new Date() > new Date(job.applicationDeadline)
     ) {
-      return errorResponse(
-        res,
-        400,
-        'Application deadline has passed'
-      );
+      return errorResponse(res, 400, 'Application deadline has passed');
     }
 
-    const profile = await CandidateProfile.findOne({
-      user: req.user._id,
-    });
+    const profile = await CandidateProfile.findOne({ user: req.user._id });
 
     if (!profile || !profile.resumeUrl) {
       return errorResponse(
@@ -62,21 +52,11 @@ export const applyForJob = async (req, res, next) => {
       `You successfully applied for ${job.title}.`
     );
 
-    return successResponse(
-      res,
-      201,
-      'Applied successfully',
-      application
-    );
+    return successResponse(res, 201, 'Applied successfully', application);
   } catch (error) {
     if (error.code === 11000) {
-      return errorResponse(
-        res,
-        400,
-        'You have already applied to this job'
-      );
+      return errorResponse(res, 400, 'You have already applied to this job');
     }
-
     next(error);
   }
 };
@@ -84,13 +64,8 @@ export const applyForJob = async (req, res, next) => {
 // Candidate's applications
 export const getMyApplications = async (req, res, next) => {
   try {
-    const applications = await Application.find({
-      candidate: req.user._id,
-    })
-      .populate(
-        'job',
-        'title location status employmentType'
-      )
+    const applications = await Application.find({ candidate: req.user._id })
+      .populate('job', 'title location status employmentType')
       .sort({ createdAt: -1 });
 
     return successResponse(
@@ -113,8 +88,6 @@ export const getJobApplications = async (req, res, next) => {
       return errorResponse(res, 404, 'Job not found');
     }
 
-    // Admin can access any job.
-    // Recruiter/hiring manager must own the job.
     if (
       req.user.role !== 'admin' &&
       job.createdBy.toString() !== req.user._id.toString()
@@ -126,9 +99,7 @@ export const getJobApplications = async (req, res, next) => {
       );
     }
 
-    const applications = await Application.find({
-      job: req.params.jobId,
-    })
+    const applications = await Application.find({ job: req.params.jobId })
       .populate('candidate', 'name email')
       .sort({ aiScore: -1, createdAt: -1 });
 
@@ -144,11 +115,7 @@ export const getJobApplications = async (req, res, next) => {
 };
 
 // Update application status
-export const updateApplicationStatus = async (
-  req,
-  res,
-  next
-) => {
+export const updateApplicationStatus = async (req, res, next) => {
   try {
     const { status } = req.body;
 
@@ -170,16 +137,13 @@ export const updateApplicationStatus = async (
       );
     }
 
-    const application = await Application.findById(
-      req.params.id
-    ).populate('job', 'title createdBy');
+    const application = await Application.findById(req.params.id).populate(
+      'job',
+      'title createdBy'
+    );
 
     if (!application) {
-      return errorResponse(
-        res,
-        404,
-        'Application not found'
-      );
+      return errorResponse(res, 404, 'Application not found');
     }
 
     const job = application.job;
@@ -197,13 +161,8 @@ export const updateApplicationStatus = async (
 
     application.status = status;
 
-    if (status === 'shortlisted') {
-      application.shortlistedAt = new Date();
-    }
-
-    if (status === 'rejected') {
-      application.rejectedAt = new Date();
-    }
+    if (status === 'shortlisted') application.shortlistedAt = new Date();
+    if (status === 'rejected')    application.rejectedAt    = new Date();
 
     await application.save();
 
@@ -225,31 +184,48 @@ export const updateApplicationStatus = async (
   }
 };
 
-// AI analysis
-export const analyzeApplication = async (
-  req,
-  res,
-  next
-) => {
+// Recruiter/Admin: GET all applications across all their jobs — GET /api/applications
+export const getAllApplications = async (req, res, next) => {
   try {
-    const application = await Application.findById(
-      req.params.id
-    )
-      .populate('job')
-      .populate('candidate');
+    let applications;
 
-    if (!application) {
-      return errorResponse(
-        res,
-        404,
-        'Application not found'
-      );
+    if (req.user.role === 'admin') {
+      // Admin sees everything
+      applications = await Application.find({})
+        .populate('job', 'title location status')
+        .populate('candidate', 'name email')
+        .sort({ createdAt: -1 });
+    } else {
+      // Recruiter/hiring_manager: only their own jobs
+      const recruiterJobs = await Job.find({ createdBy: req.user._id }).select('_id');
+      const jobIds = recruiterJobs.map((j) => j._id);
+      applications = await Application.find({ job: { $in: jobIds } })
+        .populate('job', 'title location status')
+        .populate('candidate', 'name email')
+        .sort({ createdAt: -1 });
     }
 
+    return successResponse(res, 200, 'Applications retrieved successfully', applications);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// AI analysis — POST /api/applications/:id/analyze
+export const analyzeApplication = async (req, res, next) => {
+  try {
+    const application = await Application.findById(req.params.id)
+      .populate('job')
+      .populate('candidate', 'name email');
+
+    if (!application) {
+      return errorResponse(res, 404, 'Application not found');
+    }
+
+    // Authorization: admin can analyze any; recruiter must own the job
     if (
       req.user.role !== 'admin' &&
-      application.job.createdBy.toString() !==
-        req.user._id.toString()
+      application.job.createdBy.toString() !== req.user._id.toString()
     ) {
       return errorResponse(
         res,
@@ -263,29 +239,23 @@ export const analyzeApplication = async (
     });
 
     if (!profile) {
-      return errorResponse(
-        res,
-        404,
-        'Candidate profile not found'
-      );
+      return errorResponse(res, 404, 'Candidate profile not found');
     }
 
+    // Pass populated candidate User so the adapter has name/email
     const analysis = await analyzeResume(
       profile,
-      application.job
+      application.job,
+      application.candidate
     );
 
-    application.aiScore = analysis.score;
+    // Store using matchScore from AI (not .score — that field does not exist)
+    application.aiScore   = analysis.matchScore;
     application.aiSummary = analysis;
 
     await application.save();
 
-    return successResponse(
-      res,
-      200,
-      'AI analysis completed',
-      application
-    );
+    return successResponse(res, 200, 'AI analysis completed', application);
   } catch (error) {
     next(error);
   }
