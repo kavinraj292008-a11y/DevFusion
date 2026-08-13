@@ -1,15 +1,55 @@
-import { delay } from './api';
-import { User, UserRole } from '../types/user';
+import api from './api';
+import { User } from '../types/user';
+
+interface AuthResponse {
+  success: boolean;
+  message: string;
+  data: {
+    token: string;
+    user: {
+      id: string;
+      name: string;
+      email: string;
+      role: string;
+    };
+  };
+}
 
 export const authService = {
-  async login(email: string, role: UserRole): Promise<User> {
-    await delay(500);
-    return {
-      id: role === 'recruiter' ? 'rec-1' : 'cand-1',
-      name: role === 'recruiter' ? 'Sarah Jenkins' : 'Alex Rivera',
-      email,
-      role,
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150',
-    };
+  async login(email: string, password: string): Promise<User> {
+    const response = await api.post<AuthResponse>('/auth/login', { email, password });
+    const { token, user } = response.data.data;
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    return user as User;
+  },
+
+  async register(name: string, email: string, password: string, role: 'candidate' | 'recruiter' = 'candidate'): Promise<User> {
+    const response = await api.post<AuthResponse>('/auth/register', { name, email, password, role });
+    const { token, user } = response.data.data;
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    return user as User;
+  },
+
+  async getMe(): Promise<User> {
+    const response = await api.get('/auth/me');
+    const user = response.data.data.user;
+    localStorage.setItem('user', JSON.stringify(user));
+    return user as User;
+  },
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  },
+
+  getStoredUser(): User | null {
+    const raw = localStorage.getItem('user');
+    return raw ? JSON.parse(raw) : null;
+  },
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('token');
   },
 };
