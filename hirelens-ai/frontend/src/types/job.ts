@@ -1,12 +1,17 @@
 export interface Job {
-  id: string;
+  _id: string;
   title: string;
-  department: string;
-  location: string;
-  type: 'Full-time' | 'Part-time' | 'Contract' | 'Remote';
-  status: 'Active' | 'Draft' | 'Closed';
-  applicantsCount: number;
   description: string;
-  requirements: string[];
-  createdAt: string;
+  department?: string;
+  location?: string;
+  employmentType?: 'Full-time' | 'Part-time' | 'Contract' | 'Internship';
+  experienceLevel?: 'Entry' | 'Mid' | 'Senior' | 'Executive';
+  skills?: string[];
+  salaryMin?: number;
+  salaryMax?: number;
+  openings?: number;
+  status: 'draft' | 'published' | 'closed';
+  createdBy?: { _id: string; name: string; email: string };
+  applicationDeadline?: string;
+  createdAt?: string;
 }
