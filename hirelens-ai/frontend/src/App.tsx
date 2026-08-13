@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate, NavLink } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   Briefcase,
@@ -11,8 +11,8 @@ import {
   LogOut,
 } from 'lucide-react';
 import { Landing } from './pages/Landing';
-import { Login } from './pages/Login';
-import { Register } from './pages/Register';
+import { Login } from './pages/login';
+import { Register } from './pages/register';
 import { RecruiterDashboard } from './pages/recruiter/Dashboard';
 import { RecruiterJobs } from './pages/recruiter/Jobs';
 import { CreateJob } from './pages/recruiter/CreateJob';
@@ -37,6 +37,12 @@ const navItemClasses = ({ isActive }: { isActive: boolean }) =>
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { logout, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   const recruiterLinks = [
     { to: '/recruiter/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -94,7 +100,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </div>
           </div>
           <button
-            onClick={logout}
+            onClick={handleLogout}
             className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm text-rose-400 hover:bg-rose-500/10 transition-colors"
           >
             <LogOut size={16} />
@@ -118,7 +124,7 @@ export const App: React.FC = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Recruiter Routes with Strict Role Check */}
+        {/* Recruiter Routes */}
         <Route path="/recruiter/*" element={
           isAuthenticated ? (
             user?.role === 'recruiter' ? (
@@ -139,7 +145,7 @@ export const App: React.FC = () => {
           ) : <Navigate to="/login" replace />
         } />
 
-        {/* Candidate Routes with Strict Role Check */}
+        {/* Candidate Routes */}
         <Route path="/candidate/*" element={
           isAuthenticated ? (
             user?.role === 'candidate' ? (
@@ -157,7 +163,6 @@ export const App: React.FC = () => {
           ) : <Navigate to="/login" replace />
         } />
 
-        {/* Global Fallback Route */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
