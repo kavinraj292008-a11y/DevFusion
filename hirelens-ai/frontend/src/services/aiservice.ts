@@ -1,17 +1,33 @@
-import { delay } from './api';
+import api from './api';
 
+export interface AIAnalysisResult {
+  score: number;
+  strengths: string[];
+  gaps: string[];
+  matchedSkills: string[];
+  missingSkills: string[];
+  recommendation: string;
+  source?: string;
+}
+
+/**
+ * Trigger AI analysis for a specific application (recruiter/admin only).
+ * Calls Node backend → Python AI service — never calls Python directly.
+ */
 export const aiService = {
-  async analyzeCandidate(candidateId: string, jobId: string) {
-    await delay(600);
+  async analyzeApplication(applicationId: string): Promise<AIAnalysisResult> {
+    const response = await api.post(`/applications/${applicationId}/analyze`);
+    const appData = response.data?.data ?? {};
+    const ai = appData.aiSummary ?? {};
+
     return {
-      score: 92,
-      strengths: [
-        'Expert TypeScript and React knowledge aligned with stack requirements.',
-        '5 years relevant experience building scalable user interfaces.',
-      ],
-      gaps: [
-        'Limited backend Node.js evidence in provided resume.',
-      ],
+      score:           ai.matchScore   ?? appData.aiScore ?? 0,
+      strengths:       ai.strengths    ?? [],
+      gaps:            ai.weaknesses   ?? [],
+      matchedSkills:   ai.matchedSkills ?? [],
+      missingSkills:   ai.missingSkills ?? [],
+      recommendation:  ai.recommendation ?? '',
+      source:          ai.source,
     };
   },
 };
