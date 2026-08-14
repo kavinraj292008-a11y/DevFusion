@@ -3,7 +3,7 @@ import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { useAuth } from '../../hooks/useAuth';
 import api from '../../services/api';
-import { useAuthStore } from '../../store/authstore';
+import { useAuthStore } from '../../store/authStore';
 
 export const CandidateProfile: React.FC = () => {
   const { user } = useAuth();

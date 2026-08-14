@@ -1,32 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { candidateService } from '../../services/candidateService';
-import { aiService, AIAnalysisResult } from '../../services/aiService';
 import { Candidate } from '../../types/candidate';
 import { Card } from '../../components/ui/Card';
-import { AIAnalysisCard } from '../../components/AIAnalysisCard';
-import { Sparkles, Loader2 } from 'lucide-react';
-
-interface CandidateAIState {
-  loading: boolean;
-  result: AIAnalysisResult | null;
-  error: string | null;
-}
+import { Sparkles } from 'lucide-react';
 
 export const RecruiterCandidates: React.FC = () => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
-  const [aiStates, setAiStates] = useState<Record<string, CandidateAIState>>({});
 
   useEffect(() => {
     candidateService.getCandidates().then(setCandidates);
   }, []);
-
-  /**
-   * NOTE: AI analysis requires an application ID (not a candidate ID).
-   * To run AI analysis, navigate to the Applications view, select an
-   * application, and use the Analyze button there.
-   *
-   * The candidates pool page shows profile-level data only.
-   */
 
   return (
     <div className="space-y-4">
@@ -50,20 +33,10 @@ export const RecruiterCandidates: React.FC = () => {
                 </p>
               )}
             </div>
-
-            {/* Show AI result only when triggered per-application */}
-            {aiStates[c.id]?.result ? (
-              <AIAnalysisCard
-                score={aiStates[c.id].result!.score}
-                strengths={aiStates[c.id].result!.strengths}
-                gaps={aiStates[c.id].result!.gaps}
-              />
-            ) : (
-              <div className="rounded-xl p-4 border border-slate-700/50 bg-slate-800/30 text-xs text-slate-500 flex items-center gap-2">
-                <Sparkles size={14} className="text-indigo-500/60" />
-                AI analysis available from the Applications view
-              </div>
-            )}
+            <div className="rounded-xl p-4 border border-slate-700/50 bg-slate-800/30 text-xs text-slate-500 flex items-center gap-2">
+              <Sparkles size={14} className="text-indigo-500/60" />
+              AI analysis available from the Applications view
+            </div>
           </Card>
         ))}
       </div>
