@@ -21,8 +21,8 @@ export const RecruiterJobs: React.FC = () => {
     setLoading(true);
     jobService
       .getJobs()
-      .then((data) => setJobs(data.jobs))
-      .catch((err) =>
+      .then((data: any) => setJobs(data.jobs))
+      .catch((err: any) =>
         setError(err?.response?.data?.message || 'Failed to load jobs')
       )
       .finally(() => setLoading(false));
@@ -41,9 +41,7 @@ export const RecruiterJobs: React.FC = () => {
         </Link>
       </div>
 
-      {loading && (
-        <p className="text-sm text-slate-400">Loading jobs…</p>
-      )}
+      {loading && <p className="text-sm text-slate-400">Loading jobs…</p>}
 
       {error && (
         <p className="text-sm text-rose-400 bg-rose-500/10 rounded-lg px-3 py-2">
@@ -53,19 +51,14 @@ export const RecruiterJobs: React.FC = () => {
 
       <div className="grid gap-4">
         {!loading && jobs.length === 0 && !error && (
-          <p className="text-sm text-slate-400">
-            No jobs yet. Create your first job listing.
-          </p>
+          <p className="text-sm text-slate-400">No jobs yet.</p>
         )}
-
         {jobs.map((job) => (
           <Card key={job._id} className="flex justify-between items-center">
             <div>
               <h3 className="font-semibold text-slate-100">{job.title}</h3>
               <p className="text-xs text-slate-400">
-                {job.department}
-                {job.department && job.location ? ' • ' : ''}
-                {job.location}
+                {job.department} {job.location ? `• ${job.location}` : ''}
               </p>
             </div>
             <Badge variant={statusVariant[job.status] ?? 'indigo'}>

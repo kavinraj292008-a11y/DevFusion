@@ -27,11 +27,6 @@ export const RecruiterCandidates: React.FC = () => {
               <p className="text-xs text-slate-400">
                 {c.role} • {c.experienceYears} Years Exp
               </p>
-              {c.skills && c.skills.length > 0 && (
-                <p className="text-xs text-slate-500 mt-1">
-                  Skills: {c.skills.slice(0, 5).join(', ')}
-                </p>
-              )}
             </div>
             <div className="rounded-xl p-4 border border-slate-700/50 bg-slate-800/30 text-xs text-slate-500 flex items-center gap-2">
               <Sparkles size={14} className="text-indigo-500/60" />

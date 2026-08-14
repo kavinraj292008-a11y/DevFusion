@@ -9,9 +9,16 @@ export const mockJobs: Job[] = [
     description: 'Looking for a React/TypeScript expert to drive AI dashboard architecture.',
     department: 'Engineering',
     location: 'Remote (US)',
+
     employmentType: 'Full-time',
     status: 'published',
     skills: ['React', 'TypeScript', 'Tailwind CSS', 'State Management'],
+    type: 'Full-time',
+    status: 'published',
+    applicantsCount: 24,
+    description: 'Looking for a React/TypeScript expert to drive AI dashboard architecture.',
+    requirements: ['React', 'TypeScript', 'Tailwind CSS', 'State Management'],
+
     createdAt: '2026-08-01',
   },
   {
@@ -20,9 +27,11 @@ export const mockJobs: Job[] = [
     description: 'Scale LLM-driven ATS candidate matching algorithms.',
     department: 'Product',
     location: 'New York, NY',
-    employmentType: 'Full-time',
+    type: 'Full-time',
     status: 'published',
-    skills: ['Product Strategy', 'LLMs', 'Agile', 'Data Analytics'],
+    applicantsCount: 12,
+    description: 'Scale LLM-driven ATS candidate matching algorithms.',
+    requirements: ['Product Strategy', 'LLMs', 'Agile', 'Data Analytics'],
     createdAt: '2026-08-05',
   },
 ];
