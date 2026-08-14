@@ -4,20 +4,27 @@ import { Application } from '../types/application';
 
 export const mockJobs: Job[] = [
   {
-    id: 'j1',
+    _id: 'j1',
     title: 'Senior Frontend Engineer',
+    description: 'Looking for a React/TypeScript expert to drive AI dashboard architecture.',
     department: 'Engineering',
     location: 'Remote (US)',
+
+    employmentType: 'Full-time',
+    status: 'published',
+    skills: ['React', 'TypeScript', 'Tailwind CSS', 'State Management'],
     type: 'Full-time',
     status: 'published',
     applicantsCount: 24,
     description: 'Looking for a React/TypeScript expert to drive AI dashboard architecture.',
     requirements: ['React', 'TypeScript', 'Tailwind CSS', 'State Management'],
+
     createdAt: '2026-08-01',
   },
   {
-    id: 'j2',
+    _id: 'j2',
     title: 'AI/ML Product Manager',
+    description: 'Scale LLM-driven ATS candidate matching algorithms.',
     department: 'Product',
     location: 'New York, NY',
     type: 'Full-time',
@@ -38,7 +45,7 @@ export const mockCandidates: Candidate[] = [
     experienceYears: 5,
     skills: ['React', 'TypeScript', 'Tailwind', 'Zustand', 'Next.js'],
     matchScore: 92,
-    summary: 'Strong experience with modern frontend tech stacks and building complex web applications.',
+    summary: 'Strong experience with modern frontend tech stacks.',
   },
   {
     id: 'c2',
