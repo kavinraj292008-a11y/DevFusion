@@ -40,7 +40,7 @@ export const Landing: React.FC = () => {
 
         <div className="max-w-3xl z-10 space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-semibold tracking-wide uppercase">
-            <span> Next-Gen ATS Powered by AI</span>
+            <span>✨ Next-Gen ATS Powered by AI</span>
           </div>
 
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
@@ -70,19 +70,19 @@ export const Landing: React.FC = () => {
         {/* Feature Grid Preview */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full text-left">
           <div className="glass-panel p-6 rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <div className="h-10 w-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mb-4"></div>
+            <div className="h-10 w-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mb-4">🎯</div>
             <h3 className="font-semibold text-lg text-slate-900 mb-2">Smart Resume Scoring</h3>
             <p className="text-sm text-slate-600">Match candidates to job descriptions based on semantic skill alignment, not just keyword matching.</p>
           </div>
 
           <div className="glass-panel p-6 rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <div className="h-10 w-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mb-4"></div>
+            <div className="h-10 w-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mb-4">⚡</div>
             <h3 className="font-semibold text-lg text-slate-900 mb-2">Automated Pipelines</h3>
             <p className="text-sm text-slate-600">Track applicants across stages seamlessly with built-in status management and quick updates.</p>
           </div>
 
           <div className="glass-panel p-6 rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <div className="h-10 w-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mb-4"></div>
+            <div className="h-10 w-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mb-4">📊</div>
             <h3 className="font-semibold text-lg text-slate-900 mb-2">Recruiter Analytics</h3>
             <p className="text-sm text-slate-600">Gain actionable insights into your hiring funnel with candidate statistics and metric visualizers.</p>
           </div>

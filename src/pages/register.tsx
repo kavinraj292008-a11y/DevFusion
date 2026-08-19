@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { Input } from '../components/ui/input';
-import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/Input';
+import { Button } from '../components/ui/Button';
 
 export const Register: React.FC = () => {
   const [name, setName] = useState('');
@@ -59,7 +59,7 @@ export const Register: React.FC = () => {
                   : 'bg-slate-900 border-slate-700 text-slate-400 hover:border-slate-600'
               }`}
             >
-               Candidate
+              🎯 Candidate
             </button>
             <button
               type="button"
@@ -70,7 +70,7 @@ export const Register: React.FC = () => {
                   : 'bg-slate-900 border-slate-700 text-slate-400 hover:border-slate-600'
               }`}
             >
-               Recruiter
+              🏢 Recruiter
             </button>
           </div>
         </div>
