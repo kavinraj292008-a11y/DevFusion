@@ -1,14 +1,19 @@
-import { Job } from '../types/job';
-import { Candidate } from '../types/candidate';
+// Mock data for local development only — not used in production API calls
 import { Application } from '../types/application';
 
-export const mockJobs: Job[] = [
+export const mockJobs = [
   {
-    _id: 'j1',
+    id: 'j1',
     title: 'Senior Frontend Engineer',
-    description: 'Looking for a React/TypeScript expert to drive AI dashboard architecture.',
     department: 'Engineering',
     location: 'Remote (US)',
+<<<<<<< HEAD
+    employmentType: 'full-time',
+    status: 'published',
+    applicantsCount: 24,
+    description: 'Looking for a React/TypeScript expert to drive AI dashboard architecture.',
+    requirements: ['React', 'TypeScript', 'Tailwind CSS', 'State Management'],
+=======
 
     employmentType: 'Full-time',
     status: 'published',
@@ -19,15 +24,19 @@ export const mockJobs: Job[] = [
     description: 'Looking for a React/TypeScript expert to drive AI dashboard architecture.',
     requirements: ['React', 'TypeScript', 'Tailwind CSS', 'State Management'],
 
+>>>>>>> 6b64496c4bce797ed3fb6bdf8145bdeafbdf0cf3
     createdAt: '2026-08-01',
   },
   {
-    _id: 'j2',
+    id: 'j2',
     title: 'AI/ML Product Manager',
-    description: 'Scale LLM-driven ATS candidate matching algorithms.',
     department: 'Product',
     location: 'New York, NY',
+<<<<<<< HEAD
+    employmentType: 'full-time',
+=======
     type: 'Full-time',
+>>>>>>> 6b64496c4bce797ed3fb6bdf8145bdeafbdf0cf3
     status: 'published',
     applicantsCount: 12,
     description: 'Scale LLM-driven ATS candidate matching algorithms.',
@@ -36,7 +45,7 @@ export const mockJobs: Job[] = [
   },
 ];
 
-export const mockCandidates: Candidate[] = [
+export const mockCandidates = [
   {
     id: 'c1',
     name: 'Alex Rivera',

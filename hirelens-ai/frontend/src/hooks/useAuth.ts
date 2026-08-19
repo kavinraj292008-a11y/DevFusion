@@ -12,6 +12,6 @@ export const useAuth = () => {
     logout,
     register,
     isRecruiter: user?.role === 'recruiter',
-    isCandidate: user?.role === 'candidate',
+    isCandidate:  user?.role === 'candidate',
   };
 };
