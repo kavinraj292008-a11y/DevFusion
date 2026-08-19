@@ -7,11 +7,24 @@ export const mockJobs = [
     title: 'Senior Frontend Engineer',
     department: 'Engineering',
     location: 'Remote (US)',
+<<<<<<< HEAD
     employmentType: 'full-time',
     status: 'published',
     applicantsCount: 24,
     description: 'Looking for a React/TypeScript expert to drive AI dashboard architecture.',
     requirements: ['React', 'TypeScript', 'Tailwind CSS', 'State Management'],
+=======
+
+    employmentType: 'Full-time',
+    status: 'published',
+    skills: ['React', 'TypeScript', 'Tailwind CSS', 'State Management'],
+    type: 'Full-time',
+    status: 'published',
+    applicantsCount: 24,
+    description: 'Looking for a React/TypeScript expert to drive AI dashboard architecture.',
+    requirements: ['React', 'TypeScript', 'Tailwind CSS', 'State Management'],
+
+>>>>>>> 6b64496c4bce797ed3fb6bdf8145bdeafbdf0cf3
     createdAt: '2026-08-01',
   },
   {
@@ -19,7 +32,11 @@ export const mockJobs = [
     title: 'AI/ML Product Manager',
     department: 'Product',
     location: 'New York, NY',
+<<<<<<< HEAD
     employmentType: 'full-time',
+=======
+    type: 'Full-time',
+>>>>>>> 6b64496c4bce797ed3fb6bdf8145bdeafbdf0cf3
     status: 'published',
     applicantsCount: 12,
     description: 'Scale LLM-driven ATS candidate matching algorithms.',

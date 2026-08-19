@@ -44,11 +44,6 @@ export const RecruiterCandidates: React.FC = () => {
               <p className="text-xs text-slate-400">
                 {c.role} • {c.experienceYears} Years Exp
               </p>
-              {c.skills && c.skills.length > 0 && (
-                <p className="text-xs text-slate-500 mt-1">
-                  Skills: {c.skills.slice(0, 5).join(', ')}
-                </p>
-              )}
             </div>
 
             {/* Show AI result only when triggered per-application */}
