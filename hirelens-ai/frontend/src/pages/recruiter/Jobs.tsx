@@ -8,9 +8,8 @@ export const RecruiterJobs: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
 
   useEffect(() => {
-<<<<<<< HEAD
     jobService.getJobs().then(setJobs);
-=======
+
     setLoading(true);
     jobService
       .getJobs()
@@ -19,15 +18,15 @@ export const RecruiterJobs: React.FC = () => {
         setError(err?.response?.data?.message || 'Failed to load jobs')
       )
       .finally(() => setLoading(false));
->>>>>>> 6b64496c4bce797ed3fb6bdf8145bdeafbdf0cf3
+
   }, []);
 
   return (
     <div className="space-y-4">
-<<<<<<< HEAD
+
       <h1 className="text-2xl font-bold text-white">Job Openings</h1>
       <div className="grid gap-4">
-=======
+
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-white">Job Openings</h1>
         <Link
@@ -51,18 +50,18 @@ export const RecruiterJobs: React.FC = () => {
         {!loading && jobs.length === 0 && !error && (
           <p className="text-sm text-slate-400">No jobs yet.</p>
         )}
->>>>>>> 6b64496c4bce797ed3fb6bdf8145bdeafbdf0cf3
+
         {jobs.map((job) => (
           <Card key={job.id} className="flex justify-between items-center">
             <div>
               <h3 className="font-semibold text-slate-100">{job.title}</h3>
-<<<<<<< HEAD
+
               <p className="text-xs text-slate-400">{job.department} • {job.location}</p>
-=======
+
               <p className="text-xs text-slate-400">
                 {job.department} {job.location ? `• ${job.location}` : ''}
               </p>
->>>>>>> 6b64496c4bce797ed3fb6bdf8145bdeafbdf0cf3
+
             </div>
             <Badge variant="indigo">{job.applicantsCount} Applicants</Badge>
           </Card>
