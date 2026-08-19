@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { Input } from '../components/ui/input';
-import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/Input';
+import { Button } from '../components/ui/Button';
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('');

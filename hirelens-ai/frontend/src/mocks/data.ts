@@ -1,33 +1,34 @@
-import { Job } from '../types/job';
-import { Candidate } from '../types/candidate';
+// Mock data for local development only — not used in production API calls
 import { Application } from '../types/application';
 
-export const mockJobs: Job[] = [
+export const mockJobs = [
   {
-    _id: 'j1',
+    id: 'j1',
     title: 'Senior Frontend Engineer',
-    description: 'Looking for a React/TypeScript expert to drive AI dashboard architecture.',
     department: 'Engineering',
     location: 'Remote (US)',
-    employmentType: 'Full-time',
+    employmentType: 'full-time',
     status: 'published',
-    skills: ['React', 'TypeScript', 'Tailwind CSS', 'State Management'],
+    applicantsCount: 24,
+    description: 'Looking for a React/TypeScript expert to drive AI dashboard architecture.',
+    requirements: ['React', 'TypeScript', 'Tailwind CSS', 'State Management'],
     createdAt: '2026-08-01',
   },
   {
-    _id: 'j2',
+    id: 'j2',
     title: 'AI/ML Product Manager',
-    description: 'Scale LLM-driven ATS candidate matching algorithms.',
     department: 'Product',
     location: 'New York, NY',
-    employmentType: 'Full-time',
+    employmentType: 'full-time',
     status: 'published',
-    skills: ['Product Strategy', 'LLMs', 'Agile', 'Data Analytics'],
+    applicantsCount: 12,
+    description: 'Scale LLM-driven ATS candidate matching algorithms.',
+    requirements: ['Product Strategy', 'LLMs', 'Agile', 'Data Analytics'],
     createdAt: '2026-08-05',
   },
 ];
 
-export const mockCandidates: Candidate[] = [
+export const mockCandidates = [
   {
     id: 'c1',
     name: 'Alex Rivera',

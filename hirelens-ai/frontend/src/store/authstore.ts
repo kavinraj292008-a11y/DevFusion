@@ -2,8 +2,6 @@ import { create } from 'zustand';
 import { User } from '../types/user';
 import { authService } from '../services/authService';
 
-
-
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
