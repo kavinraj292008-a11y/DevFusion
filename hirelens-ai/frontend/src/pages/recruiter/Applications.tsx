@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { applicationService } from '../../services/applicationService';
-import { aiService, AIAnalysisResult } from '../../services/aiService';
+import { aiService, AIAnalysisResult } from '../../services/aiservice';
 import { Application } from '../../types/application';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
