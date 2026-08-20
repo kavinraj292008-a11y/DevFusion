@@ -21,11 +21,21 @@ const app = express();
 // CORS
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    origin: (origin, callback) => {
+      const allowed = [
+        'http://localhost:5173',
+        'https://frontend-1-ruby.vercel.app',
+        'https://dev-fusion-git-main-ctrl-z1730.vercel.app',
+      ];
+      if (!origin || allowed.includes(origin) || origin.endsWith('.vercel.app')) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   })
 );
-
 // Body parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
