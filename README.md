@@ -647,7 +647,7 @@ The project is not yet production-ready. Features, APIs, and architecture are su
 
 ## License
 
-MIT License
+MIT License.
 
 Copyright (c) 2026 Team CTRL+Z
 
