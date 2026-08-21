@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Input } from '../../components/ui/Input';
-
 import { jobService } from '../../services/jobService';
 import { useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
