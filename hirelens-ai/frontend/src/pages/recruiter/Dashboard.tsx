@@ -5,10 +5,12 @@ import api from '../../services/api';
 
 function unwrap(res: any): any[] {
   const raw = res?.data;
-  if (Array.isArray(raw)) return raw;
-  if (Array.isArray(raw?.data)) return raw.data;
-  if (Array.isArray(raw?.jobs)) return raw.jobs;
-  if (Array.isArray(raw?.applications)) return raw.applications;
+  if (Array.isArray(raw?.data?.jobs))          return raw.data.jobs;
+  if (Array.isArray(raw?.data?.applications))  return raw.data.applications;
+  if (Array.isArray(raw?.data))                return raw.data;
+  if (Array.isArray(raw?.jobs))                return raw.jobs;
+  if (Array.isArray(raw?.applications))        return raw.applications;
+  if (Array.isArray(raw))                      return raw;
   return [];
 }
 
