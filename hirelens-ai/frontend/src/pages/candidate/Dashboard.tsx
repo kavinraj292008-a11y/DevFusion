@@ -5,8 +5,12 @@ import { useAuth } from '../../hooks/useAuth';
 import api from '../../services/api';
 
 function unwrap(data: any): any[] {
-  if (Array.isArray(data)) return data;
-  if (Array.isArray(data?.data)) return data.data;
+  if (Array.isArray(data?.data?.jobs))          return data.data.jobs;
+  if (Array.isArray(data?.data?.applications))  return data.data.applications;
+  if (Array.isArray(data?.data))                return data.data;
+  if (Array.isArray(data?.jobs))                return data.jobs;
+  if (Array.isArray(data?.applications))        return data.applications;
+  if (Array.isArray(data))                      return data;
   return [];
 }
 
