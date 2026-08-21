@@ -26,8 +26,12 @@ export const CandidateJobs: React.FC = () => {
   useEffect(() => {
     api.get('/jobs')
       .then(res => {
-        const data = res.data?.data ?? res.data ?? [];
-        setJobs(data.filter((j: Job) => j.status === 'published' || j.status === 'Active'));
+        const raw = res.data;
+        const data = Array.isArray(raw?.data?.jobs) ? raw.data.jobs
+                   : Array.isArray(raw?.data)       ? raw.data
+                   : Array.isArray(raw?.jobs)       ? raw.jobs
+                   : Array.isArray(raw)             ? raw : [];
+        setJobs(data.filter((j: any) => j.status === 'published' || j.status === 'Active'));
       })
       .catch(err => setError(err?.response?.data?.message || 'Failed to load jobs.'))
       .finally(() => setLoading(false));
