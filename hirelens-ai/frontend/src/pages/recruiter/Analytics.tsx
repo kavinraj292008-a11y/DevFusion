@@ -12,8 +12,18 @@ export const RecruiterAnalytics: React.FC = () => {
       api.get('/jobs'),
       api.get('/applications'),
     ]).then(([jobsRes, appsRes]) => {
-      const jobs = jobsRes.status === 'fulfilled' ? (jobsRes.value.data?.data ?? []) : [];
-      const apps = appsRes.status === 'fulfilled' ? (appsRes.value.data?.data ?? []) : [];
+      const jobRaw = jobsRes.status === 'fulfilled' ? jobsRes.value.data : null;
+      const appRaw = appsRes.status === 'fulfilled' ? appsRes.value.data : null;
+
+      // Backend returns { data: { jobs: [...] } } for jobs and { data: [...] } for applications
+      const jobs = Array.isArray(jobRaw?.data?.jobs) ? jobRaw.data.jobs
+                 : Array.isArray(jobRaw?.data)       ? jobRaw.data
+                 : Array.isArray(jobRaw?.jobs)       ? jobRaw.jobs
+                 : [];
+      const apps = Array.isArray(appRaw?.data?.applications) ? appRaw.data.applications
+                 : Array.isArray(appRaw?.data)                ? appRaw.data
+                 : Array.isArray(appRaw?.applications)        ? appRaw.applications
+                 : [];
 
       const byStage = apps.reduce((acc: any, a: any) => {
         const s = a.status ?? 'applied';
