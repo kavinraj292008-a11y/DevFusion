@@ -1,37 +1,17 @@
+// Candidates are fetched via /applications (populated with candidate data)
+// There is no standalone GET /candidates route on the backend
+// This file is kept for potential future use
+
 import api from './api';
-import { Candidate } from '../types/candidate';
 
 export const candidateService = {
-  async getCandidates(): Promise<Candidate[]> {
-    const res = await api.get('/candidates');
-    const docs = res.data?.data ?? res.data ?? [];
-    return docs.map((d: any): Candidate => ({
-      id:              d._id ?? d.id,
-      name:            d.name ?? d.user?.name ?? '',
-      email:           d.email ?? d.user?.email ?? '',
-      role:            d.currentRole ?? d.role ?? 'Candidate',
-      experienceYears: d.experienceYears ?? 0,
-      skills:          d.skills ?? [],
-      matchScore:      d.aiScore ?? d.matchScore ?? 0,
-      summary:         d.bio ?? d.summary ?? '',
-      resumeUrl:       d.resumeUrl,
-    }));
+  async getMyProfile() {
+    const res = await api.get('/candidates/me');
+    return res.data?.data ?? res.data;
   },
 
-  async getCandidateById(id: string): Promise<Candidate | undefined> {
-    const res = await api.get(`/candidates/${id}`);
-    const d = res.data?.data ?? res.data;
-    if (!d) return undefined;
-    return {
-      id:              d._id ?? d.id,
-      name:            d.name ?? d.user?.name ?? '',
-      email:           d.email ?? d.user?.email ?? '',
-      role:            d.currentRole ?? d.role ?? 'Candidate',
-      experienceYears: d.experienceYears ?? 0,
-      skills:          d.skills ?? [],
-      matchScore:      d.aiScore ?? d.matchScore ?? 0,
-      summary:         d.bio ?? d.summary ?? '',
-      resumeUrl:       d.resumeUrl,
-    };
+  async updateMyProfile(data: { skills?: string[]; experienceYears?: number; bio?: string }) {
+    const res = await api.put('/candidates/me', data);
+    return res.data?.data ?? res.data;
   },
 };
